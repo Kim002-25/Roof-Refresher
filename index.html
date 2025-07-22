@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roof Refresher Project</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Kincrev&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Kincrev', sans-serif;
+    }
+    .hero-text h1 {
+      font-size: 4rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-text">
+      <h1>Roof Refresher</h1>
+      <p>Heat-Responsive Roof Cooling System with Water Conservation Integration</p>
+      <a href="#design" class="btn">View 3D Design</a>
+      <a href="#system" class="btn btn-secondary">Explore System</a>
+    </div>
+  </header>
+
+  <!-- Summary Section -->
+  <section id="summary" class="section">
+    <h2>Project Summary</h2>
+    <p>
+      The Roof Refresher aims to reduce indoor heat in residential homes by using a sensor-activated sprinkler system. Designed for tropical regions like the Philippines, it offers a sustainable, low-cost solution to help households manage extreme temperatures.
+    </p>
+  </section>
+
+  <!-- 3D Design Section -->
+  <section id="design" class="section">
+    <h2>3D Design</h2>
+    <div class="gallery">
+      <img src="design1.png" alt="3D Design View 1" />
+      <img src="design2.png" alt="3D Design View 2" />
+      <img src="design3.png" alt="3D Design View 3" />
+    </div>
+  </section>
+
+   <!-- Materials Used Section -->
+  <section id="materials" class="section">
+    <h2>Materials Used</h2>
+    <div class="materials">
+      <div class="card">
+        <img src="materials/lm35.png" alt="LM35 Sensor" />
+        <h3>LM35 Temperature Sensor</h3>
+        <p>Monitors roof temperature and activates the system at 35°C.</p>
+      </div>
+      <div class="card">
+        <img src="materials/pump.png" alt="Mini Pump" />
+        <h3>Mini Water Pump</h3>
+        <p>Sprays water onto the roof surface during high temperatures.</p>
+      </div>
+      <div class="card">
+        <img src="materials/relay.png" alt="Relay Module" />
+        <h3>Relay Module</h3>
+        <p>Controls the electrical switch to the pump and sprinklers.</p>
+      </div>
+      <div class="card">
+        <img src="materials/lcd.png" alt="LCD" />
+        <h3>16x2 LCD Display</h3>
+        <p>Displays real-time temperature, countdown, and system status.</p>
+      </div>
+      <div class="card">
+        <img src="materials/arduino.png" alt="Arduino Uno" />
+        <h3>Arduino Uno</h3>
+        <p>Main microcontroller that runs the automated cooling program.</p>
+      </div>
+      <div class="card">
+        <img src="materials/lightbulb.png" alt="Mini Lightbulb" />
+        <h3>Mini Lightbulb</h3>
+        <p>Indicates when the system is active or inactive.</p>
+      </div>
+      <div class="card">
+        <img src="materials/button.png" alt="Push Button" />
+        <h3>Push Button</h3>
+        <p>Manually starts or stops the system or resets the program.</p>
+      </div>
+      <div class="card">
+        <img src="materials/resistor.png" alt="Resistor" />
+        <h3>Resistor</h3>
+        <p>Protects components from excess electrical current.</p>
+      </div>
+      <div class="card">
+        <img src="materials/jumper.png" alt="Jumper Wires" />
+        <h3>Jumper Wires</h3>
+        <p>Connects components across the breadboard and Arduino.</p>
+      </div>
+      <div class="card">
+        <img src="materials/breadboard.png" alt="Breadboard" />
+        <h3>Breadboard</h3>
+        <p>Allows prototyping without soldering for easy connections.</p>
+      </div>
+    </div>
+  </section>
+
+<!-- Source Code Section -->
+<section id="source-code" class="section">
+  <h2>Download Source Code</h2>
+  <div class="btn-wrapper">
+  <a href="roof_refresher.txt" class="btn" download>Download Source Code</a>
+</div>
+
+</section>
+
+
+  <!-- System Overview Section -->
+  <section id="system" class="section">
+    <h2>System Overview</h2>
+    <p>
+      The Roof Refresher system automatically activates when the LM35 detects temperatures at or above 35°C. A relay triggers the water pump, which sprays water for 10 seconds, then shuts off to conserve water. The LCD displays system status and countdown.
+    </p>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="section">
+    <h2>Meet the Team</h2>
+    <div class="team">
+      <div class="member">
+        <img src="members/Sumio.png" alt="Team Member 1" />
+        <h3>Marc Kevin Sumio</h3>
+        <p>Project Leader / Programmer</p>
+      </div>
+      <div class="member">
+        <img src="members/Valdez.png" alt="Team Member 2" />
+        <h3>Sandy Ysabel Valdez</h3>
+        <p>Introduction/Abstract</p>
+      </div>
+      <div class="member">
+        <img src="members/Maramag.png" alt="Team Member 3" />
+        <h3>Aimily Maramag</h3>
+        <p>Research & Documentation</p>
+      </div>
+      <div class="member">
+        <img src="members/Villarba.png" alt="Team Member 4" />
+        <h3>John Lloyd Villarba</h3>
+        <p>System Designer</p>
+      </div>
+      <div class="member">
+        <img src="members/Marron.png" alt="Team Member 5" />
+        <h3>Janis Japlin Marron</h3>
+        <p>Methodology</p>
+      </div>
+      <div class="member">
+        <img src="members/Vicente.png" alt="Team Member 6" />
+        <h3>Ella Joy Vicente</h3>
+        <p>Results and Discusions</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Acknowledgement Section -->
+  <section id="acknowledgement" class="section">
+    <h2>Acknowledgement</h2>
+    <p>
+      We extend our sincere gratitude to our adviser, instructors, classmates, specially Bonjoe Sumio, Benny Balimbin, and Anthony Nacnac for helping us build our prototype, family and friends who supported us throughout the development of the Roof Refresher project. Your encouragement, guidance, and constructive feedback made this research possible.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Roof Refresher Project. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

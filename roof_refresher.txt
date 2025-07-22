@@ -1,0 +1,148 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Pins
+const int lm35Pin = A0;
+const int relayPin = 7;
+const int bulbPin = 8;
+const int startButton = 2;
+const int stopButton = 3;
+const int plusButton = 4;
+const int minusButton = 5;
+const int modeButton = 6;
+
+// Variables
+bool autoMode = true;
+bool pumpRunning = false;
+unsigned long pumpStartTime = 0;
+unsigned long lastButtonPress = 0;
+unsigned long lastTempRead = 0;
+unsigned long tempUpdateInterval = 5000;  // 5 seconds
+float currentTemp = 0;
+
+int timerDuration = 10; // seconds
+
+void setup() {
+  Serial.begin(9600);
+
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor(2, 0);  // Centered intro
+  lcd.print("Roof Refresher");
+  delay(2000);
+  lcd.clear();
+
+  pinMode(relayPin, OUTPUT);
+  pinMode(bulbPin, OUTPUT);
+  pinMode(startButton, INPUT_PULLUP);
+  pinMode(stopButton, INPUT_PULLUP);
+  pinMode(plusButton, INPUT_PULLUP);
+  pinMode(minusButton, INPUT_PULLUP);
+  pinMode(modeButton, INPUT_PULLUP);
+
+  digitalWrite(relayPin, HIGH);  // OFF state
+  digitalWrite(bulbPin, LOW);
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+
+  // Read temperature every 5 seconds
+  if (currentMillis - lastTempRead >= tempUpdateInterval) {
+    currentTemp = readTemperature();
+    lastTempRead = currentMillis;
+  }
+
+  updateLCD();
+
+  handleButtons();
+
+  // Auto mode temp trigger
+  if (autoMode && !pumpRunning && currentTemp >= 38.0) {
+    startPump();
+  }
+
+  // Stop pump when time is up
+  if (pumpRunning && (millis() - pumpStartTime >= timerDuration * 1000UL)) {
+    stopPump();
+  }
+
+  delay(100); // Debounce buffer
+}
+
+float readTemperature() {
+  int sensorVal = analogRead(lm35Pin);
+  float voltage = sensorVal * (5.0 / 1023.0);
+  return voltage * 100.0;
+}
+
+void updateLCD() {
+  lcd.setCursor(0, 0);
+  lcd.print("Temp: ");
+  lcd.print(currentTemp, 1);
+  lcd.print((char)223);
+  lcd.print("C     ");
+
+  lcd.setCursor(0, 1);
+  lcd.print("Mod:");
+  lcd.print(autoMode ? "A" : "M");
+  lcd.print(" Time:");
+
+  if (pumpRunning) {
+    int timeLeft = timerDuration - (millis() - pumpStartTime) / 1000;
+    lcd.print(timeLeft >= 0 ? timeLeft : 0);
+    lcd.print("   ");
+  } else {
+    lcd.print(timerDuration);
+    lcd.print("   ");
+  }
+}
+
+void startPump() {
+  digitalWrite(relayPin, LOW);
+  digitalWrite(bulbPin, HIGH);
+  pumpStartTime = millis();
+  pumpRunning = true;
+  Serial.println("Pump Started");
+}
+
+void stopPump() {
+  digitalWrite(relayPin, HIGH);
+  digitalWrite(bulbPin, LOW);
+  pumpRunning = false;
+  Serial.println("Pump Stopped");
+}
+
+void handleButtons() {
+  if (millis() - lastButtonPress < 300) return;
+
+  if (digitalRead(startButton) == LOW && !pumpRunning && !autoMode) {
+    startPump();
+    lastButtonPress = millis();
+  }
+
+  if (digitalRead(stopButton) == LOW && pumpRunning) {
+    stopPump();
+    lastButtonPress = millis();
+  }
+
+  if (digitalRead(plusButton) == LOW) {
+    if (timerDuration < 30) timerDuration++;
+    lastButtonPress = millis();
+  }
+
+  if (digitalRead(minusButton) == LOW) {
+    if (timerDuration > 5) timerDuration--;
+    lastButtonPress = millis();
+  }
+
+  if (digitalRead(modeButton) == LOW) {
+    autoMode = !autoMode;
+    stopPump(); // Force stop during mode switch
+    lastButtonPress = millis();
+  }
+}
+
+
